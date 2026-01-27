@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PRCT14_Client.AddEditAcademicLoadPage"
+             Title="Учебная нагрузка">
+
+    <ScrollView>
+        <StackLayout Padding="20">
+            <TableView x:Name="tvAcademicLoad">
+                <TableRoot>
+                    <TableSection Title="Основная информация">
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Преподаватель" VerticalOptions="Center" WidthRequest="120"/>
+                                <Picker x:Name="pickerTeacher" HorizontalOptions="FillAndExpand"
+                                        Title="Выберите преподавателя"
+                                        ItemDisplayBinding="{Binding Surname}"/>
+                            </StackLayout>
+                        </ViewCell>
+
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Дисциплина" VerticalOptions="Center" WidthRequest="120"/>
+                                <Picker x:Name="pickerDiscipline" HorizontalOptions="FillAndExpand"
+                                        Title="Выберите дисциплину"
+                                        ItemDisplayBinding="{Binding Name}"/>
+                            </StackLayout>
+                        </ViewCell>
+
+                        <EntryCell Label="Группа" Text="{Binding Group}" Placeholder="Введите группу" Keyboard="Numeric"/>
+                        <EntryCell Label="Семестр" Text="{Binding Semester}" Placeholder="Введите семестр" Keyboard="Numeric"/>
+                        <EntryCell Label="Количество часов" Text="{Binding NumberOfHours}" Placeholder="Введите количество часов" Keyboard="Numeric"/>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+            <Button Text="Сохранить" x:Name="btnSave" Clicked="btnSave_Clicked" Margin="10,10"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

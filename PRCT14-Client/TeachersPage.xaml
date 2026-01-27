@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PRCT14_Client.TeachersPage"
+             Title="Преподаватели">
+
+    <StackLayout>
+        <Label Text="Список преподавателей" FontSize="20" HorizontalTextAlignment="Center"/>
+        <ListView x:Name="lvTeachers" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding ServiceNumber}" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Surname}" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Post}" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Department}" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Experience, StringFormat='Стаж: {0} лет'}" HorizontalOptions="Center"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Добавить запись" x:Name="btnAdd" Clicked="btnAdd_Clicked" Margin="10,10"/>
+        <Button Text="Редактировать запись" x:Name="btnEdit" Clicked="btnEdit_Clicked" Margin="10,10"/>
+        <Button Text="Удалить запись" x:Name="btnDelete" Clicked="btnDelete_Clicked" Margin="10,10"/>
+    </StackLayout>
+</ContentPage>

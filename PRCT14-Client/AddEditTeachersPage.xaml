@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PRCT14_Client.AddEditTeachersPage"
+             Title="Преподаватель">
+
+    <ScrollView>
+        <StackLayout Padding="20">
+            <TableView x:Name="tvTeacher">
+                <TableRoot>
+                    <TableSection Title="Основная информация">
+                        <EntryCell Label="Фамилия" Text="{Binding Surname}" Placeholder="Введите фамилию"/>
+                        <EntryCell Label="Должность" Text="{Binding Post}" Placeholder="Введите должность"/>
+                        <EntryCell Label="Кафедра" Text="{Binding Department}" Placeholder="Введите кафедру"/>
+                        <EntryCell Label="Стаж (лет)" Text="{Binding Experience}" Placeholder="Введите стаж" Keyboard="Numeric"/>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+            <Button Text="Сохранить" x:Name="btnSave" Clicked="btnSave_Clicked" Margin="10,10"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
