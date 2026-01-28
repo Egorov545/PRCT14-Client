@@ -11,25 +11,26 @@
                     <TableSection Title="Основная информация">
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="Преподаватель" VerticalOptions="Center" WidthRequest="120"/>
+                                <Label Text="Преподаватель:" VerticalOptions="Center"/>
                                 <Picker x:Name="pickerTeacher" HorizontalOptions="FillAndExpand"
-                                        Title="Выберите преподавателя"
-                                        ItemDisplayBinding="{Binding Surname}"/>
+                                        Title="Выберите преподавателя" ItemDisplayBinding="{Binding Surname}"/>
                             </StackLayout>
                         </ViewCell>
 
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="Дисциплина" VerticalOptions="Center" WidthRequest="120"/>
+                                <Label Text="Дисциплина:" VerticalOptions="Center"/>
                                 <Picker x:Name="pickerDiscipline" HorizontalOptions="FillAndExpand"
-                                        Title="Выберите дисциплину"
-                                        ItemDisplayBinding="{Binding Name}"/>
+                                        Title="Выберите дисциплину" ItemDisplayBinding="{Binding Name}"/>
                             </StackLayout>
                         </ViewCell>
 
-                        <EntryCell Label="Группа" Text="{Binding Group}" Placeholder="Введите группу" Keyboard="Numeric"/>
-                        <EntryCell Label="Семестр" Text="{Binding Semester}" Placeholder="Введите семестр" Keyboard="Numeric"/>
-                        <EntryCell Label="Количество часов" Text="{Binding NumberOfHours}" Placeholder="Введите количество часов" Keyboard="Numeric"/>
+                        <EntryCell x:Name="entryGroup" Label="Группа" Text="{Binding Group}"
+                                   Placeholder="Введите группу" Keyboard="Numeric"/>
+                        <EntryCell x:Name="entrySemester" Label="Семестр" Text="{Binding Semester}" 
+                                   Placeholder="Введите семестр" Keyboard="Numeric"/>
+                        <EntryCell x:Name="entryHours" Label="Количество часов" Text="{Binding NumberOfHours}" 
+                                   Placeholder="Введите кол-во часов" Keyboard="Numeric"/>
                     </TableSection>
                 </TableRoot>
             </TableView>

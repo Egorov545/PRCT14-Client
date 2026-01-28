@@ -1,37 +1,35 @@
-﻿using PRCT14_Client.Models;
+﻿using System.Collections.ObjectModel;
+using PRCT14_Client.Models;
 using PRCT14_Client.Services;
 
 namespace PRCT14_Client
 {
     public partial class MainPage : ContentPage
     {
+        private ObservableCollection<AcademicLoadDTO> _academicLoads = new ObservableCollection<AcademicLoadDTO>();
+
         public MainPage()
         {
             InitializeComponent();
+            lvAcademicLoads.ItemsSource = _academicLoads;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            //LoadAcademicLoads();
-            var teachers = APIService.Get<List<Teacher>>("api/teachers");            
-            var disciplines = APIService.Get<List<Discipline>>("api/disciplines");            
-            var academicLoads = APIService.Get<List<AcademicLoad>>("api/academicloads");
-           
-            foreach (var load in academicLoads)
-            {
-                load.TeacherCodeNavigation = teachers.FirstOrDefault(t => t.ServiceNumber == load.TeacherCode);
-                load.DisciplineCodeNavigation = disciplines.FirstOrDefault(d => d.DisciplineCode == load.DisciplineCode);
-            }
-
-            lvAcademicLoads.ItemsSource = academicLoads;
+            LoadAcademicLoads();
         }
 
         private void LoadAcademicLoads()
         {
             try
-            {
-                lvAcademicLoads.ItemsSource = APIService.Get<List<AcademicLoad>>("api/academicloads?includeTeachers=true&includeDisciplines=true");
+            {                
+                var loads = APIService.Get<List<AcademicLoadDTO>>("api/AcademicLoads/Info");
+                if (loads != null)
+                {
+                    _academicLoads.Clear();
+                    foreach (var load in loads) _academicLoads.Add(load);
+                }
             }
             catch (Exception ex)
             {
@@ -39,43 +37,58 @@ namespace PRCT14_Client
             }
         }
 
-        private async void btnTeachers_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new TeachersPage());
-        }
-
         private async void btnAddAcademicLoad_Clicked(object sender, EventArgs e)
         {
-            Data.AcademicLoad = null;
-            var page = new AddEditAcademicLoadPage();
-            page.Disappearing += (s, args) => LoadAcademicLoads();
-            await Navigation.PushModalAsync(page);
+            await Navigation.PushAsync(new AddEditAcademicLoadPage());
         }
 
         private async void btnEditAcademicLoad_Clicked(object sender, EventArgs e)
         {
-            var selectedLoad = (AcademicLoad)lvAcademicLoads.SelectedItem;
-            if (selectedLoad != null)
+            var selected = lvAcademicLoads.SelectedItem as AcademicLoadDTO;
+            if (selected == null)
             {
-                Data.AcademicLoad = selectedLoad;
-                var page = new AddEditAcademicLoadPage();
-                page.Disappearing += (s, args) => LoadAcademicLoads();
-                await Navigation.PushModalAsync(page);
+                await DisplayAlert("Ошибка", "Выберите запись для редактирования", "OK");
+                return;
             }
-            else
+            
+            try
             {
-                await DisplayAlert("Ошибка", "Выберите нагрузку для редактирования", "OK");
+                var fullLoad = APIService.Get<AcademicLoadEditDTO>($"api/AcademicLoads/{selected.AcademLoadCode}");
+                await Navigation.PushAsync(new AddEditAcademicLoadPage(fullLoad));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ошибка", $"Не удалось загрузить запись: {ex.Message}", "OK");
             }
         }
 
-        private void btnDeleteAcademicLoad_Clicked(object sender, EventArgs e)
+        private async void btnDeleteAcademicLoad_Clicked(object sender, EventArgs e)
         {
-            var item = (AcademicLoad)lvAcademicLoads.SelectedItem;
-            if (item != null)
+            var selected = lvAcademicLoads.SelectedItem as AcademicLoadDTO;
+            if (selected == null)
             {
-                APIService.Delete(item.AcademLoadCode, "api/academicloads");
-                LoadAcademicLoads();
+                await DisplayAlert("Ошибка", "Выберите запись для удаления", "OK");
+                return;
             }
+
+            var confirm = await DisplayAlert("Подтверждение", "Удалить запись?", "Да", "Нет");
+            if (confirm)
+            {
+                try
+                {
+                    APIService.Delete(selected.AcademLoadCode, "api/AcademicLoads");
+                    LoadAcademicLoads();
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Ошибка", $"Не удалось удалить запись: {ex.Message}", "OK");
+                }
+            }
+        }
+
+        private async void btnTeachers_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TeachersPage());
         }
     }
 }

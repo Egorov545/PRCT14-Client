@@ -12,8 +12,8 @@
                     <ViewCell>
                         <StackLayout>
                             <Label Text="{Binding AcademLoadCode}" HorizontalOptions="Center"/>
-                            <Label Text="{Binding TeacherCodeNavigation.Surname, StringFormat='Преподаватель: {0}'}" HorizontalOptions="Center"/>
-                            <Label Text="{Binding DisciplineCodeNavigation.Name, StringFormat='Дисциплина: {0}'}" HorizontalOptions="Center"/>
+                            <Label Text="{Binding TeacherSurname, StringFormat='Преподаватель: {0}'}" HorizontalOptions="Center"/>
+                            <Label Text="{Binding DisciplineName, StringFormat='Дисциплина: {0}'}" HorizontalOptions="Center"/>
                             <Label Text="{Binding Group, StringFormat='Группа: {0}'}" HorizontalOptions="Center"/>
                             <Label Text="{Binding Semester, StringFormat='Семестр: {0}'}" HorizontalOptions="Center"/>
                             <Label Text="{Binding NumberOfHours, StringFormat='Часов: {0}'}" HorizontalOptions="Center"/>
@@ -22,9 +22,9 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Добавить нагрузку" Clicked="btnAddAcademicLoad_Clicked" Margin="10, 10"/>
-        <Button Text="Редактировать нагрузку" Clicked="btnEditAcademicLoad_Clicked" Margin="10, 10"/>
-        <Button Text="Удалить нагрузку" Clicked="btnDeleteAcademicLoad_Clicked" Margin="10, 10"/>
+        <Button Text="Добавить запись" Clicked="btnAddAcademicLoad_Clicked" Margin="10, 10"/>
+        <Button Text="Редактировать запись" Clicked="btnEditAcademicLoad_Clicked" Margin="10, 10"/>
+        <Button Text="Удалить запись" Clicked="btnDeleteAcademicLoad_Clicked" Margin="10, 10"/>
         <Button Text="Преподаватели" Clicked="btnTeachers_Clicked" Margin="10, 10"/>
     </StackLayout>
 </ContentPage>
